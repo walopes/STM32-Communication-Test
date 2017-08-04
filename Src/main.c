@@ -40,7 +40,8 @@
 #include "stm32f3xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-
+#include <stdlib.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -49,7 +50,9 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-
+uint8_t msg1[5] = "mod1\n";
+uint8_t msg2[5] = "mod2\n";
+char string[30];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,15 +99,22 @@ int main(void)
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-
+  int x=0;
   /* USER CODE END 2 */
-
+  int n;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
   /* USER CODE END WHILE */
+	  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_3);
 
+	  //HAL_UART_Transmit(&huart1,msg1,5,100);
+	  HAL_UART_Transmit(&huart2,msg2,5,100);
+	  //printf("LALALA\n");
+	  //n=sprintf(string,"Numero: %d\n\r",x++);
+	  HAL_UART_Transmit(&huart2,string,n,100);
+	  HAL_Delay(1000);
   /* USER CODE BEGIN 3 */
 
   }
@@ -171,7 +181,7 @@ static void MX_USART1_UART_Init(void)
 
   huart1.Instance = USART1;
   huart1.Init.BaudRate = 38400;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.WordLength = UART_WORDLENGTH_7B;
   huart1.Init.StopBits = UART_STOPBITS_1;
   huart1.Init.Parity = UART_PARITY_NONE;
   huart1.Init.Mode = UART_MODE_TX_RX;
@@ -192,7 +202,6 @@ static void MX_USART2_UART_Init(void)
 
   huart2.Instance = USART2;
   huart2.Init.BaudRate = 9600;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
   huart2.Init.Mode = UART_MODE_TX_RX;
