@@ -52,6 +52,8 @@ UART_HandleTypeDef huart2;
 /* Private variables ---------------------------------------------------------*/
 uint8_t msg1[5] = "mod1\n";
 uint8_t msg2[5] = "mod2\n";
+uint8_t modx[8] = "";
+uint8_t mody[29] = "";
 char string[30];
 /* USER CODE END PV */
 
@@ -99,21 +101,46 @@ int main(void)
   MX_USART1_UART_Init();
 
   /* USER CODE BEGIN 2 */
-  int x=0;
+  //int x=0;
   /* USER CODE END 2 */
-  int n;
+  //int n;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
+  uint16_t Position[100], Time[100];
+  char c=0;
+
   while (1)
   {
   /* USER CODE END WHILE */
 	  HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_3);
-
+	  while(c < 100)
+	  {
+		  Position[c] = c;
+		  Time[c] = (100 - c);
+		  c++;
+	  }
 	  //HAL_UART_Transmit(&huart1,msg1,5,100);
-	  HAL_UART_Transmit(&huart2,msg2,5,100);
+	  //HAL_UART_Transmit(&huart2,msg2,5,100);
+
+	  //sprintf(modx,"modulo2\n");
+	  c=0;
+	  while(c < 100)
+	  {
+		  sprintf(mody,"Pos[%d]=%.5u Tempo[%d]=%*u\r\n",c,Position[c],c,5,Time[c]);
+		  HAL_UART_Transmit(&huart2,mody,29,50);
+		  //Position[c] = c;
+		  //Time[c] = (100 - c);
+		  HAL_Delay(10);
+		  c++;
+	  }
+
+	  //HAL_UART_Transmit(&huart2,msg2,5,100);
+
 	  //printf("LALALA\n");
 	  //n=sprintf(string,"Numero: %d\n\r",x++);
-	  HAL_UART_Transmit(&huart2,string,n,100);
+	  //HAL_UART_Transmit(&huart2,string,n,100);
+
 	  HAL_Delay(1000);
   /* USER CODE BEGIN 3 */
 
