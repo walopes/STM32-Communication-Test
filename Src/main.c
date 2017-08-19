@@ -118,16 +118,17 @@ int main(void)
 	  c=0;
 	  while(c < 100)
 	  {
-		  sprintf(mody,"Pos[%d]=%.5u Tempo[%d]=%*u\r\n",c,Position[c],c,5,Time[c]);
-		  HAL_UART_Transmit(&huart2,mody,29,50);
+		  sprintf(mody,"Pos=%.5u Tempo=%.5u\n\r",Position[c],Time[c]);
+		  HAL_UART_Transmit(&huart2,mody,23,100);
 		  //Position[c] = c;
 		  //Time[c] = (100 - c);
 		  HAL_Delay(10);
 		  c++;
 	  }
 
-
-	  HAL_Delay(1000);
+	  sprintf(modx,"\n----\n\r");
+	  HAL_UART_Transmit(&huart2,modx,7,100);
+	  HAL_Delay(5000);
   /* USER CODE BEGIN 3 */
 
   }
@@ -214,7 +215,8 @@ static void MX_USART2_UART_Init(void)
 {
 
   huart2.Instance = USART2;
-  huart2.Init.BaudRate = 9600;
+  //huart2.Init.BaudRate = 9600;
+  huart2.Init.BaudRate = 38400;
   huart2.Init.StopBits = UART_STOPBITS_1;
   huart2.Init.Parity = UART_PARITY_NONE;
   huart2.Init.Mode = UART_MODE_TX_RX;
