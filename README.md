@@ -1,6 +1,6 @@
 ___STM32_Communication_Test___
 
-This code is a UART test code, which aims to work with a Bluetooth Device: HC-06.
+This code is an UART test code, which aims to work with a Bluetooth Device: HC-06.
 The USART1 can be emulated on a PC, in a software like Putty.
 
 Softwares that are being used: 
